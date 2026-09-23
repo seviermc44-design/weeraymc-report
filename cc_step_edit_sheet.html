@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CC 4.0 Translation — Step 5 Edit Sheet (Thai)</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+    body { font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', 'Sarabun', system-ui, sans-serif; margin: 0; }
+    ::selection { background: #18181b; color: white; }
+    code { font-family: 'JetBrains Mono', monospace; }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+</head>
+<body class="bg-[#fcfbf8] text-zinc-900 antialiased">
+  <div id="root"></div>
+
+  <script>
+    const { useState, useEffect, useMemo } = React;
+
+    const T = {
+      ncOnly: "for NonCommercial purposes only",
+      including: "including when the Licensed Material is used for other than NonCommercial purposes",
+      adaptedMust: "If You Share Adapted Material You produce, the Adapter's License You apply must not prevent recipients of the Adapted Material from complying with this Public License.",
+      avoidance: "For the avoidance of doubt, You do not have permission under this Public License to Share Adapted Material.",
+      provided: "provided You do not Share Adapted Material",
+      andProvided: "and provided You do not Share Adapted Material",
+      butNotShare: "produce and reproduce, but not Share, Adapted Material",
+      butNotShareNC: "produce and reproduce, but not Share, Adapted Material for NonCommercial purposes only",
+      includingMod: "(including in modified form)",
+      additionalOffer: "Additional offer from Licensor",
+      includingPurpose: "including for purposes of Section 3(b)"
+    };
+
+    const FILES = [
+      {
+        id: "by", filename: "by_4.0_th.html",
+        titleTh: "ไฟล์ 1 — Attribution 4.0", titleEn: "File 1 — BY 4.0",
+        count: 14, color: "bg-zinc-900",
+        tasks: [
+          { no: 1, type: "delete", loc: "<title> + heading + ประโยคแรก", th: "ลบ NonCommercial-ShareAlike (รวมตัวย่อ) เหลือ Attribution 4.0 International", en: "Remove NonCommercial-ShareAlike (incl. abbreviation) → Attribution 4.0 International", code: "NonCommercial-ShareAlike" },
+          { no: 2, type: "delete", loc: "Definitions", th: "ลบนิยาม BY-NC-SA Compatible License ทั้งนิยาม", en: "Delete entire BY-NC-SA Compatible License definition", code: "BY-NC-SA Compatible License" },
+          { no: 3, type: "delete", loc: "Definitions", th: "ลบนิยาม License Elements ทั้งนิยาม", en: "Delete entire License Elements definition", code: "License Elements" },
+          { no: 4, type: "delete", loc: "Definitions", th: "ลบนิยาม NonCommercial ทั้งนิยาม", en: "Delete entire NonCommercial definition", code: "NonCommercial" },
+          { no: 5, type: "reletter", loc: "Definitions ทั้งหมด", th: "เรียงลำดับพยัญชนะ (A)(B)(C)... ใหม่", en: "Re-letter all definitions (A)(B)(C)..." },
+          { no: 6, type: "delete", loc: "2(a)(1)(A)", th: "ลบวลี for NonCommercial purposes only", en: "Delete phrase for NonCommercial purposes only", code: T.ncOnly },
+          { no: 7, type: "delete", loc: "2(a)(1)(B)", th: "ลบวลี for NonCommercial purposes only", en: "Delete phrase for NonCommercial purposes only", code: T.ncOnly },
+          { no: 8, type: "delete", loc: "2(a)(5)", th: "ลบทั้งวรรค Additional offer from Licensor", en: "Delete entire paragraph Additional offer from Licensor", code: T.additionalOffer },
+          { no: 9, type: "reletter", loc: "2(a)(5)", th: "เรียงลำดับใหม่หลังลบ", en: "Re-letter after deletion" },
+          { no: 10, type: "delete", loc: "2(b)(3)", th: "ลบ including when the Licensed Material is used for other than NonCommercial purposes", en: "Delete including when... other than NonCommercial purposes", code: T.including },
+          { no: 11, type: "insert", loc: "3(a)(4)", th: "แทรกใหม่ - Adapter's License ต้องไม่ขัดกับ Public License นี้", en: "Insert new clause for Adapted Material compliance", code: T.adaptedMust },
+          { no: 12, type: "delete", loc: "Section 3(b)", th: "ลบทั้งมาตรา 3(b) ShareAlike", en: "Delete entire Section 3(b) ShareAlike", code: "Section 3(b)" },
+          { no: 13, type: "delete", loc: "4(a)", th: "ลบ for NonCommercial purposes only", en: "Delete for NonCommercial purposes only", code: T.ncOnly },
+          { no: 14, type: "delete", loc: "4(b)", th: "ลบ including for purposes of Section 3(b)", en: "Delete including for purposes of Section 3(b)", code: T.includingPurpose }
+        ]
+      },
+      {
+        id: "bysa", filename: "by-sa_4.0_th.html",
+        titleTh: "ไฟล์ 2 — Attribution-ShareAlike 4.0", titleEn: "File 2 — BY-SA 4.0",
+        count: 10, color: "bg-indigo-600",
+        tasks: [
+          { no: 1, type: "delete", loc: "title + heading + ประโยคแรก", th: "ลบ NonCommercial เหลือ Attribution-ShareAlike 4.0", en: "Remove NonCommercial → Attribution-ShareAlike 4.0", code: "NonCommercial" },
+          { no: 2, type: "edit", loc: "Def: BY-NC-SA Compatible License", th: "ลบ NC ออก → เหลือ BY-SA Compatible License", en: "Remove NC → BY-SA Compatible License", code: "BY-NC-SA Compatible License → BY-SA Compatible License" },
+          { no: 3, type: "delete", loc: "Def: License Elements", th: "ลบ NonCommercial ออกจากนิยาม", en: "Remove NonCommercial from License Elements definition", code: "NonCommercial" },
+          { no: 4, type: "delete", loc: "Definitions", th: "ลบนิยาม NonCommercial", en: "Delete NonCommercial definition", code: "NonCommercial" },
+          { no: 5, type: "reletter", loc: "Definitions ทั้งหมด", th: "เรียงพยัญชนะ (A)(B)(C)... ใหม่", en: "Re-letter definitions" },
+          { no: 6, type: "delete", loc: "2(a)(1)(A)", th: "ลบ for NonCommercial purposes only", en: "Delete for NonCommercial purposes only", code: T.ncOnly },
+          { no: 7, type: "delete", loc: "2(a)(1)(B)", th: "ลบ for NonCommercial purposes only", en: "Delete for NonCommercial purposes only", code: T.ncOnly },
+          { no: 8, type: "delete", loc: "2(b)(3)", th: "ลบ including when…other than NonCommercial purposes", en: "Delete including when... NonCommercial", code: T.including },
+          { no: 9, type: "delete", loc: "3(b)(1)", th: "ลบ NC ออกจาก 3(b)(1)", en: "Remove NC from 3(b)(1)", code: "NC" },
+          { no: 10, type: "delete", loc: "4(a)", th: "ลบ for NonCommercial purposes only", en: "Delete for NonCommercial purposes only", code: T.ncOnly }
+        ],
+        keepNotes: [
+          "ไม่ต้องแทรก 3(a)(4) — เพราะ BY-SA ยัง ShareAlike (No need to insert 3(a)(4))",
+          "ไม่ต้องลบ Section 3(b) — คงไว้ (Keep Section 3(b))"
+        ]
+      },
+      {
+        id: "bync", filename: "by-nc_4.0_th.html",
+        titleTh: "ไฟล์ 3 — Attribution-NonCommercial 4.0", titleEn: "File 3 — BY-NC 4.0",
+        count: 9, color: "bg-amber-600",
+        tasks: [
+          { no: 1, type: "delete", loc: "title + heading + ประโยคแรก", th: "ลบ ShareAlike เหลือ Attribution-NonCommercial 4.0", en: "Remove ShareAlike → Attribution-NonCommercial 4.0", code: "ShareAlike" },
+          { no: 2, type: "delete", loc: "Def: BY-NC-SA Compatible License", th: "ลบทั้งนิยาม", en: "Delete entire definition", code: "BY-NC-SA Compatible License" },
+          { no: 3, type: "delete", loc: "Def: License Elements", th: "ลบทั้งนิยาม", en: "Delete entire definition", code: "License Elements" },
+          { no: 4, type: "reletter", loc: "Definitions ทั้งหมด", th: "เรียงใหม่", en: "Re-letter all definitions" },
+          { no: 5, type: "delete", loc: "2(a)(5)", th: "ลบ Additional offer from Licensor", en: "Delete Additional offer from Licensor", code: T.additionalOffer },
+          { no: 6, type: "reletter", loc: "2(a)(5)", th: "เรียงใหม่", en: "Re-letter" },
+          { no: 7, type: "insert", loc: "3(a)(4)", th: "แทรกข้อความเดียวกับไฟล์ 1", en: "Insert same text as File 1", code: T.adaptedMust },
+          { no: 8, type: "delete", loc: "Section 3(b)", th: "ลบทั้งมาตรา", en: "Delete entire Section", code: "Section 3(b)" },
+          { no: 9, type: "delete", loc: "4(b)", th: "ลบ including for purposes of Section 3(b)", en: "Delete including for purposes of Section 3(b)", code: T.includingPurpose }
+        ],
+        keepNotes: ["เก็บ NonCommercial definition ไว้ (Keep NonCommercial definition) — BY-NC ยังต้องมี"]
+      },
+      {
+        id: "bynd", filename: "by-nd_4.0_th.html",
+        titleTh: "ไฟล์ 4 — Attribution-NoDerivatives 4.0", titleEn: "File 4 — BY-ND 4.0",
+        count: 17, color: "bg-emerald-700",
+        tasks: [
+          { no: 1, type: "edit", loc: "title + heading + ประโยคแรก", th: "ลบ NonCommercial-ShareAlike → ใส่ NoDerivatives เหลือ Attribution-NoDerivatives 4.0", en: "Replace NonCommercial-ShareAlike with NoDerivatives", code: "NonCommercial-ShareAlike → NoDerivatives" },
+          { no: 2, type: "delete", loc: "Definitions", th: "ลบนิยาม Adapter's License — ไฟล์นี้ลบตัวนี้ด้วย!", en: "Delete Adapter's License definition — special for ND!", code: "Adapter's License" },
+          { no: 3, type: "delete", loc: "Definitions", th: "ลบนิยาม BY-NC-SA Compatible License", en: "Delete BY-NC-SA Compatible License", code: "BY-NC-SA Compatible License" },
+          { no: 4, type: "delete", loc: "Definitions", th: "ลบนิยาม License Elements", en: "Delete License Elements", code: "License Elements" },
+          { no: 5, type: "delete", loc: "Definitions", th: "ลบนิยาม NonCommercial", en: "Delete NonCommercial", code: "NonCommercial" },
+          { no: 6, type: "reletter", loc: "Definitions ทั้งหมด", th: "เรียงใหม่", en: "Re-letter all" },
+          { no: 7, type: "delete", loc: "2(a)(1)(A)", th: "ลบ for NonCommercial purposes only", en: "Delete for NonCommercial purposes only", code: T.ncOnly },
+          { no: 8, type: "edit", loc: "2(a)(1)(B)", th: "เปลี่ยนเป็น: produce and reproduce, but not Share, Adapted Material", en: "Change to: produce and reproduce, but not Share, Adapted Material", code: T.butNotShare },
+          { no: 9, type: "delete", loc: "2(a)(5)", th: "ลบ Additional offer from Licensor", en: "Delete Additional offer", code: T.additionalOffer },
+          { no: 10, type: "reletter", loc: "2(a)(5)", th: "เรียงใหม่", en: "Re-letter" },
+          { no: 11, type: "delete", loc: "2(b)(3)", th: "ลบ including when…other than NonCommercial purposes", en: "Delete including when... NonCommercial", code: T.including },
+          { no: 12, type: "delete", loc: "3(a)(1)", th: "ลบ (including in modified form)", en: "Delete (including in modified form)", code: T.includingMod },
+          { no: 13, type: "insert", loc: "3(a)(1) ท้ายวรรค", th: "แทรกประโยค For the avoidance...", en: "Insert For the avoidance... clause", code: T.avoidance },
+          { no: 14, type: "delete", loc: "Section 3(b)", th: "ลบทั้งมาตรา", en: "Delete entire Section 3(b)", code: "Section 3(b)" },
+          { no: 15, type: "delete", loc: "4(a)", th: "ลบ for NonCommercial purposes only", en: "Delete for NonCommercial purposes only", code: T.ncOnly },
+          { no: 16, type: "insert", loc: "4(a)", th: "แทรก: provided You do not Share Adapted Material", en: "Insert: provided You do not Share Adapted Material", code: T.provided },
+          { no: 17, type: "delete", loc: "4(b)", th: "ลบ including for purposes of Section 3(b)", en: "Delete including for purposes of Section 3(b)", code: T.includingPurpose }
+        ]
+      },
+      {
+        id: "byncnd", filename: "by-nc-nd_4.0_th.html",
+        titleTh: "ไฟล์ 5 — Attribution-NonCommercial-NoDerivatives 4.0", titleEn: "File 5 — BY-NC-ND 4.0",
+        count: 13, color: "bg-rose-700",
+        tasks: [
+          { no: 1, type: "edit", loc: "title + heading + ประโยคแรก", th: "ลบ ShareAlike → ใส่ NoDerivatives เหลือ Attribution-NonCommercial-NoDerivatives 4.0", en: "Replace ShareAlike with NoDerivatives", code: "ShareAlike → NoDerivatives" },
+          { no: 2, type: "delete", loc: "Definitions", th: "ลบนิยาม Adapter's License", en: "Delete Adapter's License", code: "Adapter's License" },
+          { no: 3, type: "delete", loc: "Definitions", th: "ลบนิยาม BY-NC-SA Compatible License", en: "Delete BY-NC-SA Compatible License", code: "BY-NC-SA Compatible License" },
+          { no: 4, type: "delete", loc: "Definitions", th: "ลบนิยาม License Elements", en: "Delete License Elements", code: "License Elements" },
+          { no: 5, type: "reletter", loc: "Definitions ทั้งหมด", th: "เรียงใหม่", en: "Re-letter all" },
+          { no: 6, type: "edit", loc: "2(a)(1)(B)", th: "เปลี่ยนเป็น: produce and reproduce, but not Share, Adapted Material for NonCommercial purposes only", en: "Change to with NonCommercial clause", code: T.butNotShareNC },
+          { no: 7, type: "delete", loc: "2(a)(5)", th: "ลบ Additional offer from Licensor", en: "Delete Additional offer", code: T.additionalOffer },
+          { no: 8, type: "reletter", loc: "2(a)(5)", th: "เรียงใหม่", en: "Re-letter" },
+          { no: 9, type: "delete", loc: "3(a)(1)", th: "ลบ (including in modified form)", en: "Delete (including in modified form)", code: T.includingMod },
+          { no: 10, type: "insert", loc: "3(a)(1) ท้ายวรรค", th: "แทรกประโยค For the avoidance... (เดียวกับไฟล์ 4)", en: "Insert same For the avoidance... clause as File 4", code: T.avoidance },
+          { no: 11, type: "delete", loc: "Section 3(b)", th: "ลบทั้งมาตรา", en: "Delete entire Section 3(b)", code: "Section 3(b)" },
+          { no: 12, type: "insert", loc: "4(a)", th: "แทรก: and provided You do not Share Adapted Material (ต่างจาก BY-ND มีคำ and)", en: "Insert: and provided... (note and difference)", code: T.andProvided },
+          { no: 13, type: "delete", loc: "4(b)", th: "ลบ including for purposes of Section 3(b)", en: "Delete including for purposes of Section 3(b)", code: T.includingPurpose }
+        ],
+        keepNotes: ["เก็บ NonCommercial definition ไว้ (Keep NonCommercial definition) — ไฟล์นี้ยังมี NC"]
+      }
+    ];
+
+    const TYPES = {
+      delete:   { labelTh: "ลบ",        labelEn: "Delete",    color: "text-red-700",     bg: "bg-red-50 border-red-200",         icon: "🔴" },
+      insert:   { labelTh: "แทรก",      labelEn: "Insert",    color: "text-emerald-700", bg: "bg-emerald-50 border-emerald-200", icon: "🟢" },
+      edit:     { labelTh: "แก้",        labelEn: "Edit",      color: "text-amber-700",   bg: "bg-amber-50 border-amber-200",     icon: "✏️" },
+      reletter: { labelTh: "เรียงใหม่", labelEn: "Re-letter", color: "text-blue-700",    bg: "bg-blue-50 border-blue-200",       icon: "🔢" }
+    };
+
+    const COMPARISON = [
+      { label: "ลบ NC จาก title / Remove NC from title", vals: ["✅","✅","—","✅","—"] },
+      { label: "ลบ SA จาก title / Remove SA from title", vals: ["✅","—","✅","✅","✅"] },
+      { label: "ใส่ ND ใน title / Insert ND in title", vals: ["—","—","—","✅","✅"] },
+      { label: "ลบ Adapter's License def", vals: ["—","—","—","✅","✅"] },
+      { label: "ลบ BY-NC-SA Compat License", vals: ["✅","✏️→ BY-SA","✅","✅","✅"] },
+      { label: "ลบ License Elements", vals: ["✅","ลบ NC","✅","✅","✅"] },
+      { label: "ลบ NonCommercial def", vals: ["✅","✅","— เก็บ","✅","— เก็บ"] },
+      { label: "ลบ for NonCommercial purposes only", vals: ["✅ 2 จุด","✅ 2 จุด","—","✅","—"] },
+      { label: "ลบ Additional offer 2(a)(5)", vals: ["✅","—","✅","✅","✅"] },
+      { label: "ลบ including when... NC purposes", vals: ["✅","✅","—","✅","—"] },
+      { label: "แทรก 3(a)(4) Adapter compliance", vals: ["🟢","—","🟢","—","—"] },
+      { label: "ลบ §3(b) ShareAlike ทั้งมาตรา", vals: ["✅","— คงไว้","✅","✅","✅"] },
+      { label: "แทรก 3(a)(1) For the avoidance...", vals: ["—","—","—","🟢","🟢"] },
+      { label: "2(a)(1)(B) → but not Share...", vals: ["—","—","—","✏️","✏️ + NC"] },
+      { label: "4(a) provided You do not Share", vals: ["—","—","—","🟢 provided","🟢 and provided"] }
+    ];
+
+    const PITFALLS = [
+      { th: "Adapter's License — ลบแค่ 2 ไฟล์ (ND กับ NC-ND) เท่านั้น", en: "Only delete Adapter's License in 2 files: ND and NC-ND", detail: "BY, BY-SA, BY-NC ต้องเก็บไว้ (Keep in BY, BY-SA, BY-NC)" },
+      { th: "3(a)(4) — แทรกแค่ 2 ไฟล์ (BY กับ BY-NC) เท่านั้น — BY-SA ไม่แทรก", en: "Insert 3(a)(4) only in 2 files (BY & BY-NC) — BY-SA does NOT insert", detail: "เพราะ BY-SA ยังมี ShareAlike (Because BY-SA still has ShareAlike)" },
+      { th: "BY-SA ยังคงมี NonCommercial def ไม่ได้ — ลบออก แต่ยังคง ShareAlike def", en: "BY-SA cannot keep NonCommercial def — delete it, but keep ShareAlike", detail: "NonCommercial → ลบ / ShareAlike → เก็บ" },
+      { th: 'BY-NC-ND ใช้ "and provided You do not Share…" ส่วน BY-ND ใช้ "provided You do not Share…" (ต่างกันคำ "and")', en: 'BY-NC-ND uses "and provided..." vs BY-ND uses "provided..." — difference is "and"', detail: `BY-ND: ${T.provided} / BY-NC-ND: ${T.andProvided}` },
+      { th: '2(a)(1)(B) — มี 3 แบบต่างกัน: BY-NC-SA เดิม / BY-ND → "but not Share, Adapted Material" / BY-NC-ND → "but not Share, Adapted Material for NonCommercial purposes only"', en: "2(a)(1)(B) has 3 variants", detail: `BY-NC-SA original / ND: ${T.butNotShare} / NC-ND: ${T.butNotShareNC}` }
+    ];
+
+    const STORAGE_KEY = "cc-edit-sheet-done";
+
+    function App() {
+      const [done, setDone] = useState(() => {
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          return saved ? new Set(JSON.parse(saved)) : new Set();
+        } catch { return new Set(); }
+      });
+      const [active, setActive] = useState("byncnd");
+      const [isMobile, setIsMobile] = useState(
+        typeof window !== "undefined" && window.innerWidth < 768
+      );
+
+      useEffect(() => {
+        const onResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
+      }, []);
+
+      useEffect(() => {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...done])); }
+        catch {}
+      }, [done]);
+
+      const toggle = (fileId, no) => {
+        const key = `${fileId}-${no}`;
+        setDone(prev => {
+          const next = new Set(prev);
+          next.has(key) ? next.delete(key) : next.add(key);
+          return next;
+        });
+      };
+
+      const goTo = (id) => {
+        setActive(id);
+        setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }), 10);
+      };
+
+      const totalTasks = useMemo(() => FILES.reduce((a, f) => a + f.tasks.length, 0), []);
+      const doneCount = done.size;
+      const pct = totalTasks ? Math.round(doneCount / totalTasks * 100) : 0;
+
+      const visibleFiles = isMobile ? FILES.filter(f => f.id === active) : FILES;
+
+      return (
+        <div className="min-h-screen bg-[#fcfbf8] text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white">
+
+          <header className="sticky top-0 z-40 backdrop-blur-xl bg-[#fcfbf8]/90 border-b border-zinc-200">
+            <div className="mx-auto max-w-[1120px] px-6 py-5 md:py-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-[10px] bg-zinc-900 text-white grid place-items-center font-bold text-[13px] tracking-widest">CC</div>
+                  <div className="text-[11px] tracking-[0.14em] uppercase text-zinc-500 font-medium">Translation Workflow • Step 5</div>
+                </div>
+                <h1 className="mt-3 text-[22px] md:text-[26px] font-semibold leading-[1.15] tracking-[-0.02em]">CC 4.0 Translation - Step 5 Edit Sheet (Thai)</h1>
+                <p className="mt-1.5 text-[13px] md:text-[14px] text-zinc-600 leading-relaxed">
+                  ใบสั่งแก้ทีละบรรทัดจาก BY-NC-SA ไทย — แปลงเป็น 5 ไฟล์ที่เหลือ <span className="text-zinc-400">(Line-by-line edit sheet from BY-NC-SA Thai — transform into remaining 5 files)</span>
+                </p>
+              </div>
+              <div className="flex items-center gap-3 self-start md:self-auto">
+                <div className="rounded-full border border-zinc-200 bg-white px-3.5 py-2 flex items-center gap-2.5 shadow-sm">
+                  <div className="text-[11px] uppercase tracking-widest text-zinc-500">Progress</div>
+                  <div className="h-1.5 w-20 rounded-full bg-zinc-100 overflow-hidden">
+                    <div className="h-full bg-zinc-900 transition-all" style={{ width: pct + "%" }} />
+                  </div>
+                  <div className="text-[12px] font-mono font-medium tabular-nums">{doneCount}/{totalTasks} • {pct}%</div>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <main className="mx-auto max-w-[1120px] px-4 md:px-6 py-6 md:py-8">
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 mb-8">
+              {Object.entries(TYPES).map(([key, t]) => (
+                <div key={key} className={`rounded-[12px] border ${t.bg} px-3.5 py-3 flex items-center gap-3`}>
+                  <div className="h-7 w-7 rounded-full bg-white border flex items-center justify-center text-[14px] shadow-sm">{t.icon}</div>
+                  <div>
+                    <div className={`text-[13px] font-semibold ${t.color} leading-none`}>
+                      {t.labelTh} <span className="opacity-60 font-normal">({t.labelEn})</span>
+                    </div>
+                    <div className="text-[11px] text-zinc-500 mt-1 uppercase tracking-widest">{key}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <section className="rounded-[16px] border border-zinc-200 bg-white shadow-sm overflow-hidden mb-8">
+              <div className="px-5 md:px-6 py-4 border-b border-zinc-100 flex items-center justify-between">
+                <h2 className="text-[13px] font-semibold tracking-[0.08em] uppercase">📊 ตารางเทียบเร็ว — Quick Comparison</h2>
+                <span className="text-[11px] text-zinc-500">BY เป็นฐาน → แปลงเป็นอีก 4 ประเภท</span>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-[12.5px] leading-[1.4] border-collapse">
+                  <thead>
+                    <tr className="bg-zinc-50 text-zinc-500 text-[11px] uppercase tracking-widest">
+                      <th className="text-left font-medium px-4 py-3 w-[260px] sticky left-0 bg-zinc-50 border-r border-zinc-100">การแก้ (Edit Action)</th>
+                      {["BY","BY-SA","BY-NC","BY-ND","BY-NC-ND"].map(h => (
+                        <th key={h} className="text-center font-semibold px-3 py-3">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-100">
+                    {COMPARISON.map((row, i) => (
+                      <tr key={i} className="hover:bg-zinc-50/60">
+                        <td className="px-4 py-2.5 font-medium sticky left-0 bg-white border-r border-zinc-100">{row.label}</td>
+                        {row.vals.map((v, j) => {
+                          const cls = v.includes("✅") ? "bg-zinc-900 text-white border-zinc-900"
+                            : v.includes("🟢") ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                            : v.includes("✏️") ? "bg-amber-50 text-amber-800 border-amber-200"
+                            : (v.includes("เก็บ") || v.includes("คงไว้")) ? "bg-blue-50 text-blue-700 border-blue-200"
+                            : "bg-zinc-50 text-zinc-400 border-zinc-200";
+                          return (
+                            <td key={j} className="text-center px-2 py-2.5">
+                              <span className={`inline-flex min-w-[56px] justify-center rounded-full px-2 py-1 text-[11px] font-medium border ${cls}`}>{v}</span>
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="px-5 py-3 bg-amber-50/50 border-t border-amber-100 text-[11px] text-amber-800 flex gap-2">
+                <span>⚠️</span>
+                <span>BY-NC-ND ใช้ "and provided..." ส่วน BY-ND ใช้ "provided..." ต่างกันคำ "and" — อย่าสลับ</span>
+              </div>
+            </section>
+
+            <div className="flex md:hidden gap-1.5 overflow-x-auto pb-3 -mx-1 px-1">
+              {FILES.map(f => {
+                const n = f.tasks.filter(t => done.has(`${f.id}-${t.no}`)).length;
+                return (
+                  <button
+                    key={f.id}
+                    onClick={() => goTo(f.id)}
+                    className={`whitespace-nowrap rounded-full px-3.5 py-2 text-[12px] font-medium border transition ${active === f.id ? "bg-zinc-900 text-white border-zinc-900" : "bg-white border-zinc-200 text-zinc-600"}`}
+                  >
+                    {f.id.toUpperCase()} • {n}/{f.tasks.length}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+
+              <aside className="hidden md:block lg:col-span-3">
+                <div className="sticky top-[92px] rounded-[16px] border border-zinc-200 bg-white p-3">
+                  <div className="px-2 py-2 text-[11px] uppercase tracking-widest text-zinc-500 font-medium">Files • ไฟล์</div>
+                  <div className="space-y-1.5">
+                    {FILES.map(f => {
+                      const n = f.tasks.filter(t => done.has(`${f.id}-${t.no}`)).length;
+                      const isActive = active === f.id;
+                      return (
+                        <button
+                          key={f.id}
+                          onClick={() => goTo(f.id)}
+                          className={`w-full text-left rounded-[12px] border px-3 py-3 transition ${isActive ? "bg-zinc-900 text-white border-zinc-900" : "bg-zinc-50 border-zinc-200 hover:bg-white"}`}
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <div className={`h-6 w-6 rounded-full grid place-items-center text-[11px] font-bold ${isActive ? "bg-white text-zinc-900" : "bg-zinc-900 text-white"}`}>{f.tasks.length}</div>
+                            <div className={`text-[11px] font-mono px-2 py-0.5 rounded-full border ${isActive ? "bg-white/15 border-white/20 text-white" : "bg-white border-zinc-200 text-zinc-500"}`}>{n}/{f.tasks.length}</div>
+                          </div>
+                          <div className={`mt-2 text-[13px] font-semibold leading-[1.2] ${isActive ? "text-white" : "text-zinc-900"}`}>{f.titleTh}</div>
+                          <div className={`text-[11px] ${isActive ? "text-white/60" : "text-zinc-500"}`}>{f.filename}</div>
+                          <div className="mt-2 h-1 rounded-full bg-black/10 overflow-hidden">
+                            <div className={`h-full transition-all ${isActive ? "bg-white" : "bg-zinc-900"}`} style={{ width: (n / f.tasks.length * 100) + "%" }} />
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-3 px-2 py-2 rounded-[10px] bg-zinc-50 border border-zinc-100">
+                    <div className="text-[11px] text-zinc-600 leading-relaxed">คลิก checkbox เพื่อทำเครื่องหมายว่าแก้เสร็จแล้ว — บันทึกอัตโนมัติในเบราว์เซอร์</div>
+                  </div>
+                </div>
+              </aside>
+
+              <div className="lg:col-span-9 space-y-6">
+                {visibleFiles.map(f => {
+                  const n = f.tasks.filter(t => done.has(`${f.id}-${t.no}`)).length;
+                  const complete = n === f.tasks.length;
+                  return (
+                    <section
+                      key={f.id}
+                      id={f.id}
+                      className={`rounded-[18px] border bg-white shadow-sm overflow-hidden ${complete ? "border-emerald-200 ring-1 ring-emerald-100" : "border-zinc-200"}`}
+                    >
+                      <div className={`px-5 md:px-6 py-4 flex items-center justify-between gap-4 ${f.color} text-white`}>
+                        <div className="flex items-center gap-3">
+                          <div className="h-9 w-9 rounded-[11px] bg-white/15 backdrop-blur grid place-items-center text-[12px] font-bold tracking-widest border border-white/20">{f.id.toUpperCase()}</div>
+                          <div>
+                            <h3 className="text-[14px] md:text-[15px] font-semibold leading-tight">
+                              {f.titleTh} <span className="opacity-70 font-normal">— {f.titleEn}</span>
+                            </h3>
+                            <div className="text-[11px] opacity-80 font-mono mt-0.5">{f.filename} • {f.count} items</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="hidden md:flex items-center gap-2 rounded-full bg-white/15 border border-white/20 px-3 py-1.5">
+                            <div className="text-[11px] uppercase tracking-widest opacity-80">Done</div>
+                            <div className="text-[13px] font-mono font-medium tabular-nums">{n}/{f.tasks.length}</div>
+                          </div>
+                          {complete && <div className="h-7 w-7 rounded-full bg-white text-emerald-700 grid place-items-center">✓</div>}
+                        </div>
+                      </div>
+
+                      {f.keepNotes?.length > 0 && (
+                        <div className="px-5 md:px-6 py-3 bg-blue-50/70 border-b border-blue-100 flex flex-col gap-1">
+                          {f.keepNotes.map((note, i) => (
+                            <div key={i} className="text-[11.5px] text-blue-800 flex gap-1.5">
+                              <span>⚠️</span><span>{note}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="divide-y divide-zinc-100">
+                        {f.tasks.map(t => {
+                          const key = `${f.id}-${t.no}`;
+                          const isDone = done.has(key);
+                          const type = TYPES[t.type];
+                          return (
+                            <label key={t.no} className={`group flex gap-3 md:gap-4 px-4 md:px-6 py-3.5 cursor-pointer transition ${isDone ? "bg-zinc-50/70" : "hover:bg-zinc-50/50"}`}>
+                              <input type="checkbox" checked={isDone} onChange={() => toggle(f.id, t.no)} className="sr-only" />
+                              <div className={`mt-0.5 h-[22px] w-[22px] shrink-0 rounded-[7px] border-2 grid place-items-center transition ${isDone ? "bg-zinc-900 border-zinc-900 text-white" : "bg-white border-zinc-300 group-hover:border-zinc-400"}`}>
+                                {isDone && <span className="text-[12px] leading-none">✓</span>}
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <div className="flex flex-wrap items-center gap-2">
+                                  <span className="text-[11px] font-mono font-medium text-zinc-500 tabular-nums">#{t.no}</span>
+                                  <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-medium ${type.bg} ${type.color}`}>
+                                    <span>{type.icon}</span>{type.labelTh} ({type.labelEn})
+                                  </span>
+                                  <span className="text-[11px] font-mono px-2 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-600">{t.loc}</span>
+                                  {isDone && <span className="text-[10px] uppercase tracking-widest text-emerald-700 font-medium">done • เสร็จ</span>}
+                                </div>
+                                <div className={`mt-2 text-[13.5px] leading-[1.45] ${isDone ? "text-zinc-500 line-through decoration-zinc-300" : "text-zinc-900"}`}>
+                                  <span className="font-medium">{t.th}</span>
+                                  <span className="text-zinc-500 font-normal"> — {t.en}</span>
+                                </div>
+                                {t.code && (
+                                  <div className="mt-2 rounded-[10px] border border-zinc-200 bg-zinc-50 px-3 py-2.5 flex items-start gap-2">
+                                    <div className="text-[10px] uppercase tracking-widest text-zinc-400 mt-0.5 shrink-0">phrase</div>
+                                    <code className="text-[12px] leading-[1.5] text-zinc-700 break-words">{t.code}</code>
+                                  </div>
+                                )}
+                              </div>
+                            </label>
+                          );
+                        })}
+                      </div>
+
+                      <div className="px-5 md:px-6 py-3 bg-zinc-50 border-t border-zinc-100 flex items-center justify-between">
+                        <div className="text-[11px] text-zinc-500">เรียงพยัญชนะ definition ใหม่หลังลบ → <span className="font-mono">🔢 reletter (A)(B)(C)...</span></div>
+                        <div className="text-[11px] font-mono text-zinc-400">{f.filename}</div>
+                      </div>
+                    </section>
+                  );
+                })}
+
+                <section className="rounded-[18px] border border-amber-200 bg-amber-50/50 p-5 md:p-6">
+                  <h2 className="text-[14px] font-semibold flex items-center gap-2">
+                    <span className="h-6 w-6 rounded-full bg-amber-600 text-white grid place-items-center text-[12px]">!</span>
+                    จุดที่คนพลาดบ่อย — Common Pitfalls (5 points)
+                  </h2>
+                  <div className="mt-4 grid gap-3">
+                    {PITFALLS.map((p, i) => (
+                      <div key={i} className="rounded-[12px] border border-amber-200 bg-white px-4 py-3.5 flex gap-3">
+                        <div className="h-7 w-7 rounded-full bg-zinc-900 text-white grid place-items-center text-[12px] font-bold shrink-0">{i + 1}</div>
+                        <div className="min-w-0">
+                          <div className="text-[13px] font-medium leading-[1.4]">{p.th}</div>
+                          <div className="text-[12px] text-zinc-600 mt-1">{p.en}</div>
+                          <div className="mt-2 text-[11px] font-mono bg-zinc-50 border border-zinc-200 rounded-[8px] px-2.5 py-2 text-zinc-700 leading-relaxed">{p.detail}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                <footer className="py-6 text-center">
+                  <div className="inline-flex flex-col items-center gap-2 rounded-full border border-zinc-200 bg-white px-5 py-3">
+                    <div className="text-[11px] uppercase tracking-[0.12em] text-zinc-500">Next Step</div>
+                    <div className="text-[13px] text-zinc-700">พอได้ BY-NC-SA ไทยเมื่อไหร่ → Apply ตารางนี้ทั้ง 5 ไฟล์ → ออกมาเป็น HTML ครบ UTF-8 พร้อม &lt;b&gt;, &lt;li&gt;, ลำดับ (a)(1)(A)</div>
+                  </div>
+                </footer>
+
+              </div>
+            </div>
+          </main>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(
+      React.createElement(React.StrictMode, null, React.createElement(App))
+    );
+  </script>
+</body>
+</html>
