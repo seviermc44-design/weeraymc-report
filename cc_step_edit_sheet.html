@@ -20,6 +20,7 @@
   <script>
     const { useState, useEffect, useMemo } = React;
 
+    // 1. โครงสร้างข้อมูลภาษา (คำศัพท์)
     const T = {
       ncOnly: "for NonCommercial purposes only",
       including: "including when the Licensed Material is used for other than NonCommercial purposes",
@@ -34,6 +35,21 @@
       includingPurpose: "including for purposes of Section 3(b)"
     };
 
+    // 2. เพิ่ม PROJECT REGISTRY ตรงตำแหน่งที่ถูกต้อง
+    const PROJECTS = [
+      { id:"mcgroup", name:"MC GROUP",     type:"Corporate",   status:"Active",               priority:"P1" },
+      { id:"mcai",    name:"MC.ai",        type:"AI Workspace",status:"Planning",             priority:"P2" },
+      { id:"mcbox",   name:"MC-Box",       type:"Storage",     status:"Planning",             priority:"P2" },
+      { id:"mcdoc",   name:"MC-DOC",       type:"Docs",        status:"Planning",             priority:"P2" },
+      { id:"kukok",   name:"Kukok",        type:"Knowledge",   status:"Architecture Complete",priority:"P2" },
+      { id:"studio",  name:"MC Studio",    type:"Creative",    status:"Planning",             priority:"P3" },
+      { id:"wirayut", name:"MC.Wirayut",   type:"Brand",       status:"Active",               priority:"P4" },
+      { id:"ymc",     name:"MC.YMC",       type:"Media",       status:"Active",               priority:"P4" },
+      { id:"y8",      name:"MC.Y8",        type:"Gaming",      status:"Concept",              priority:"P4" },
+      { id:"wanphen", name:"WANPHEN v2.0", type:"Standalone",  status:"Ready To Deploy",      priority:"P3" },
+    ];
+
+    // 3. ข้อมูลไฟล์แก้ไข
     const FILES = [
       {
         id: "by", filename: "by_4.0_th.html",
@@ -247,6 +263,44 @@
           </header>
 
           <main className="mx-auto max-w-[1120px] px-4 md:px-6 py-6 md:py-8">
+
+            {/* 4. แสดงผล PROJECT REGISTRY */}
+            <section className="rounded-[16px] border border-zinc-200 bg-white shadow-sm overflow-hidden mb-8">
+              <div className="px-5 md:px-6 py-4 border-b border-zinc-100 flex items-center justify-between">
+                <h2 className="text-[13px] font-semibold tracking-[0.08em] uppercase">🏛️ Project Registry — MC GROUP Ecosystem</h2>
+                <span className="text-[11px] text-zinc-500">Version 6.0</span>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-[12.5px] leading-[1.4] border-collapse">
+                  <thead>
+                    <tr className="bg-zinc-50 text-zinc-500 text-[11px] uppercase tracking-widest">
+                      <th className="text-left font-medium px-4 py-3">Project</th>
+                      <th className="text-left font-medium px-4 py-3">Type</th>
+                      <th className="text-left font-medium px-4 py-3">Status</th>
+                      <th className="text-center font-medium px-4 py-3 w-[100px]">Priority</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-100">
+                    {PROJECTS.map((p, i) => {
+                      const prioColor = p.priority === "P1" ? "bg-zinc-900 text-white border-zinc-900" 
+                                      : p.priority === "P2" ? "bg-blue-50 text-blue-700 border-blue-200"
+                                      : p.priority === "P3" ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                      : "bg-zinc-100 text-zinc-600 border-zinc-200";
+                      return (
+                        <tr key={i} className="hover:bg-zinc-50/60">
+                          <td className="px-4 py-3 font-semibold">{p.name}</td>
+                          <td className="px-4 py-3 text-zinc-600">{p.type}</td>
+                          <td className="px-4 py-3 text-zinc-600">{p.status}</td>
+                          <td className="text-center px-2 py-3">
+                            <span className={`inline-flex min-w-[40px] justify-center rounded-full px-2 py-1 text-[11px] font-bold border ${prioColor}`}>{p.priority}</span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </section>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 mb-8">
               {Object.entries(TYPES).map(([key, t]) => (
